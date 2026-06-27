@@ -803,7 +803,7 @@ sizePills.forEach(function(pill) {
   });
 });
 
-// 9. SUBTLE SCROLL ANIMATIONS
+// 9. SUBTLE SCROLL ANIMATIONS (SCROLL INTERACTIVE)
 window.addEventListener('load', function() {
   var animElements = document.querySelectorAll('.will-animate');
   
@@ -812,13 +812,22 @@ window.addEventListener('load', function() {
 
   var animObserver = new IntersectionObserver(function(entries, obs) {
     var intersectingEntries = entries.filter(function(e) { return e.isIntersecting; });
+    var nonIntersectingEntries = entries.filter(function(e) { return !e.isIntersecting; });
+    
+    // Remove class when scrolling out of view to make it replayable
+    nonIntersectingEntries.forEach(function(entry) {
+      entry.target.classList.remove('in-view');
+    });
+
     if(intersectingEntries.length > 0) {
       intersectingEntries.forEach(function(entry) {
         setTimeout(function() {
-          entry.target.classList.add('in-view');
+          // Double check it hasn't scrolled out during the timeout delay
+          if(entry.target.getBoundingClientRect().top < window.innerHeight) {
+            entry.target.classList.add('in-view');
+          }
         }, currentDelay);
         currentDelay += 120; // 120ms stagger between elements
-        obs.unobserve(entry.target);
       });
       
       clearTimeout(delayTimer);
