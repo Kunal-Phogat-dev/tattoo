@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dark Matter Tattoo | Studio & Art Collective</title>
+<meta name="description" content="Dark Matter is a premium tattoo studio and art collective based in Brooklyn, NY. Specializing in custom pieces, fine line, black & grey realism, and bold colors.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --cream:    #F8F0E8;
+  --sand:     #E0C8A8;
+  --rust:     #8B2A0A;
+  --burnt:    #C4501A;
+  --taupe:    #A08070;
+  --bg:       #F8F0E8;
+  --dark:     #1A0E08;
+  --text:     #2C1810;
+  --muted:    #7A6458;
+  --border:   #D4B898;
+  --surface:  #F0E4D4;
+  --card:     #EDE0CC;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 68px; }
+body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Cormorant Garamond', serif; font-weight: 300; margin: 0; }
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; border-radius: 0; }
+button, input, textarea, select { border-radius: 0; font-family: inherit; }
+.mono { font-family: 'Space Mono', monospace; }
+
+/* ANIMATION CLASSES */
+.will-animate { opacity: 0.001; transform: translateY(20px); }
+.will-animate.in-view { opacity: 1; transform: translateY(0); transition: 0.7s ease; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 68px;
+  background: var(--cream); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 8%; transition: box-shadow 0.3s ease;
+}
+nav.scrolled { box-shadow: 0 1px 0 var(--border); }
+.nav-logo { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 22px; color: var(--rust); letter-spacing: 0.2em; }
+.nav-links { display: flex; gap: 32px; }
+.nav-links a { font-size: 13px; text-transform: uppercase; letter-spacing: 0.15em; transition: color 0.3s; position: relative; }
+.nav-links a:hover, .nav-links a.active { color: var(--burnt); }
+.nav-links a::after {
+  content: ''; position: absolute; left: 0; bottom: -4px; width: 0; height: 1px; background: var(--burnt); transition: width 0.3s ease;
+}
+.nav-links a.active::after, .nav-links a:hover::after { width: 100%; }
+
+.mobile-menu-btn { display: none; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1001; }
+.mobile-menu-btn span { width: 24px; height: 2px; background: var(--rust); display: block; }
+.mobile-nav-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--cream);
+  z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 40px;
+  opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
+}
+.mobile-nav-overlay.open { opacity: 1; pointer-events: all; }
+.mobile-nav-overlay a { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 54px; color: var(--dark); letter-spacing: 0.15em; }
+.mobile-nav-close { position: absolute; top: 20px; right: 8%; font-size: 32px; color: var(--rust); cursor: pointer; font-family: sans-serif; }
+
+/* HERO */
+#home {
+  height: 100vh; min-height: 600px; position: relative; overflow: hidden;
+  background: linear-gradient(160deg, #F8F0E8 0%, #F0E4D4 40%, #E8D4BC 100%);
+}
+.hero-circle {
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, #C4501A0A 0%, transparent 70%);
+  position: absolute; top: -200px; right: -200px;
+}
+.hero-line { position: absolute; left: 0; right: 0; height: 1px; background: var(--border); opacity: 0.4; }
+.hero-line-1 { top: 25%; } .hero-line-2 { top: 50%; } .hero-line-3 { top: 75%; }
+.hero-watermark {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 22vw;
+  color: var(--sand); opacity: 0.35; position: absolute; bottom: -2vw; left: -1vw;
+  letter-spacing: -0.02em; pointer-events: none; z-index: 0; white-space: nowrap;
+}
+.hero-content {
+  position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+  height: 100%; padding: 68px 8% 0; max-width: 900px;
+}
+.hero-eyebrow { font-size: 10px; color: var(--burnt); text-transform: uppercase; letter-spacing: 0.4em; margin-bottom: 32px; }
+.hero-name-1 { font-size: 11vw; color: var(--rust); line-height: 0.9; letter-spacing: 0.04em; }
+.hero-name-2 { font-size: 11vw; color: var(--dark); line-height: 0.9; letter-spacing: 0.04em; margin-left: 4vw; }
+.hero-tagline { font-style: italic; font-size: 24px; color: var(--taupe); letter-spacing: 0.08em; margin-top: 32px; }
+.hero-divider { width: 80px; height: 1px; background: var(--burnt); margin: 28px 0; }
+.btn {
+  font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; background: var(--rust); color: var(--cream);
+  padding: 16px 48px; border: none; cursor: pointer; transition: background 0.3s ease; display: inline-block;
+}
+.btn:hover { background: var(--burnt); }
+.hero-link { font-size: 13px; color: var(--muted); margin-top: 16px; cursor: pointer; transition: color 0.3s ease; }
+.hero-link:hover { color: var(--rust); }
+.scroll-indicator {
+  position: absolute; bottom: 40px; right: 8%; writing-mode: vertical-rl;
+  font-size: 10px; color: var(--taupe); letter-spacing: 0.3em; text-transform: uppercase;
+}
+
+/* SERVICES */
+#services { background: var(--surface); padding: 120px 8%; }
+.services-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; }
+.services-top-left .eyebrow { font-size: 10px; color: var(--burnt); letter-spacing: 0.4em; }
+.services-top-left h2 { font-size: 80px; color: var(--dark); line-height: 0.95; }
+.services-top-right { font-size: 15px; color: var(--muted); line-height: 1.9; max-width: 400px; }
+.hr-full { width: 100%; height: 1px; background: var(--border); margin-bottom: 0; border: none; }
+.service-item {
+  border-top: 1px solid var(--border); padding: 32px 0; display: flex; align-items: center; justify-content: space-between; gap: 40px;
+  transition: background 0.3s;
+}
+.service-item:hover { background: var(--card); }
+.service-item:last-child { border-bottom: 1px solid var(--border); }
+.svc-num { font-size: 11px; color: var(--taupe); width: 40px; }
+.svc-name { font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--dark); flex: 1; }
+.svc-tag { font-size: 10px; color: var(--burnt); text-transform: uppercase; letter-spacing: 0.3em; width: 180px; text-align: right; }
+.svc-arrow { font-size: 20px; color: var(--taupe); transition: 0.3s; width: 30px; text-align: right; }
+.service-item:hover .svc-arrow { color: var(--rust); transform: translateX(6px); }
+
+/* ABOUT */
+#about { background: var(--bg); padding: 120px 8%; display: flex; gap: 80px; }
+.about-left { flex: 0.55; }
+.about-right { flex: 0.45; position: relative; }
+.about-eyebrow { font-size: 10px; color: var(--burnt); letter-spacing: 0.4em; margin-bottom: 24px; display: block; }
+.about-h2 { font-size: 72px; color: var(--dark); line-height: 1; margin-bottom: 32px; white-space: pre-line; }
+.about-p { font-size: 15px; color: var(--muted); line-height: 1.9; margin-bottom: 20px; }
+.stats-row { display: flex; margin-top: 52px; padding-top: 40px; border-top: 1px solid var(--border); gap: 40px; }
+.stat-num { font-size: 64px; color: var(--rust); font-family: 'Cormorant Garamond', serif; }
+.stat-label { font-size: 10px; color: var(--text); text-transform: uppercase; letter-spacing: 0.3em; margin-top: 4px; display: block; }
+.about-img-wrap {
+  width: 100%; aspect-ratio: 4/5; position: relative;
+}
+.about-img-wrap::before {
+  content: ''; width: 56px; height: 56px; border-top: 2px solid var(--rust); border-left: 2px solid var(--rust);
+  position: absolute; top: -10px; left: -10px; z-index: 2;
+}
+.about-img-wrap::after {
+  content: ''; width: 56px; height: 56px; border-bottom: 2px solid var(--rust); border-right: 2px solid var(--rust);
+  position: absolute; bottom: -10px; right: -10px; z-index: 2;
+}
+.about-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+/* PORTFOLIO */
+#portfolio { background: var(--surface); padding: 120px 8%; }
+.portfolio-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; }
+.portfolio-eyebrow { font-size: 10px; color: var(--burnt); letter-spacing: 0.3em; display: block; }
+.portfolio-h2 { font-size: 72px; color: var(--dark); line-height: 1; white-space: pre-line; }
+.portfolio-link { font-size: 13px; color: var(--rust); border-bottom: 1px solid transparent; transition: 0.3s; padding-bottom: 2px; }
+.portfolio-link:hover { border-bottom-color: var(--rust); }
+.portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+.portfolio-item { position: relative; overflow: hidden; cursor: pointer; }
+.portfolio-item:nth-child(odd) { aspect-ratio: 1/1; }
+.portfolio-item:nth-child(even) { aspect-ratio: 4/5; }
+.portfolio-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.portfolio-overlay {
+  position: absolute; inset: 0; background: rgba(248,240,232,0.92); opacity: 0; transition: opacity 0.4s ease;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10;
+}
+.portfolio-item:hover .portfolio-overlay { opacity: 1; }
+.portfolio-item:hover img { transform: scale(1.05); }
+.portfolio-overlay-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 24px; color: var(--rust); }
+.portfolio-overlay-tag { font-size: 10px; color: var(--taupe); letter-spacing: 0.3em; margin-top: 8px; }
+
+/* ARTISTS */
+#artists { background: var(--bg); padding: 120px 8%; }
+.artists-top { margin-bottom: 64px; }
+.artists-grid { display: flex; gap: 32px; }
+.artist-card { background: var(--surface); overflow: hidden; flex: 1; position: relative; border-bottom: 2px solid transparent; transition: border-bottom-color 0.3s; }
+.artist-card:hover { border-bottom-color: var(--burnt); }
+.artist-img-wrap { aspect-ratio: 1/1; position: relative; overflow: hidden; }
+.artist-img-wrap::before {
+  content: ''; width: 32px; height: 32px; border-top: 2px solid var(--rust); border-left: 2px solid var(--rust);
+  position: absolute; top: 10px; left: 10px; z-index: 2; pointer-events: none;
+}
+.artist-img-wrap::after {
+  content: ''; width: 32px; height: 32px; border-bottom: 2px solid var(--rust); border-right: 2px solid var(--rust);
+  position: absolute; bottom: 10px; right: 10px; z-index: 2; pointer-events: none;
+}
+.artist-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.artist-card:hover .artist-img-wrap img { transform: scale(1.04); }
+.artist-info { padding: 28px 28px 36px; }
+.artist-name { font-size: 34px; color: var(--dark); font-weight: 500; }
+.artist-specialty { font-size: 10px; color: var(--burnt); text-transform: uppercase; letter-spacing: 0.3em; margin-top: 8px; display: block; }
+.artist-bio { font-size: 13px; color: var(--muted); line-height: 1.8; margin-top: 14px; }
+.artist-handle { font-size: 11px; color: var(--taupe); margin-top: 16px; display: inline-block; transition: 0.3s; }
+.artist-handle:hover { color: var(--rust); }
+
+/* FAQ */
+#faq { background: var(--surface); padding: 120px 8%; }
+.faq-container { max-width: 860px; margin: 0 auto; }
+.faq-top { margin-bottom: 64px; }
+.faq-item { border-top: 1px solid var(--border); padding: 0; }
+.faq-item:last-child { border-bottom: 1px solid var(--border); }
+.faq-q { display: flex; justify-content: space-between; align-items: center; padding: 28px 0; cursor: pointer; }
+.faq-q h3 { font-size: 22px; color: var(--dark); font-weight: 400; }
+.faq-icon { font-size: 24px; color: var(--burnt); transition: 0.3s ease; }
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a { font-size: 15px; color: var(--muted); line-height: 1.9; max-height: 0; overflow: hidden; transition: max-height 0.45s ease, padding 0.45s ease; padding-bottom: 0; }
+.faq-item.open .faq-a { max-height: 400px; padding-bottom: 28px; }
+
+/* CONTACT */
+#contact { background: var(--bg); padding: 120px 8%; display: flex; gap: 80px; }
+.contact-left { flex: 0.45; }
+.contact-right { flex: 0.55; }
+.contact-h2 { font-size: 72px; color: var(--rust); line-height: 1; margin-bottom: 48px; white-space: pre-line; }
+.contact-details { display: flex; flex-direction: column; gap: 24px; }
+.contact-detail-item { display: flex; align-items: flex-start; gap: 16px; }
+.contact-icon svg { width: 20px; height: 20px; stroke: var(--burnt); fill: none; stroke-width: 1.5; }
+.contact-text { font-size: 14px; color: var(--text); line-height: 1.6; white-space: pre-line; }
+.contact-divider { width: 100%; height: 1px; background: var(--border); margin: 40px 0; }
+.social-row-title { font-size: 10px; color: var(--taupe); text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 16px; display: block; }
+.social-icons { display: flex; gap: 20px; }
+.social-icons svg { width: 22px; height: 22px; fill: var(--taupe); transition: 0.3s; cursor: pointer; }
+.social-icons svg:hover { fill: var(--rust); }
+
+.contact-form { display: flex; flex-direction: column; gap: 24px; }
+.form-group label { font-size: 10px; color: var(--burnt); text-transform: uppercase; letter-spacing: 0.3em; display: block; margin-bottom: 8px; }
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%; background: var(--cream); border: none; border-bottom: 2px solid var(--border);
+  color: var(--text); font-size: 14px; padding: 12px 4px; outline: none; transition: 0.3s;
+}
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--rust); }
+.size-selector { display: flex; flex-wrap: wrap; gap: 10px; }
+.size-pill {
+  border: 1px solid var(--border); background: transparent; color: var(--muted); padding: 10px 20px; font-size: 13px;
+  cursor: pointer; transition: 0.3s;
+}
+.size-pill.selected { border-color: var(--rust); color: var(--rust); }
+
+/* FOOTER */
+footer { background: var(--dark); padding: 72px 8% 48px; color: var(--sand); display: flex; flex-direction: column; align-items: center; gap: 40px; }
+.footer-logo { font-size: 48px; color: var(--sand); letter-spacing: 0.2em; opacity: 0.8; text-align: center; }
+.footer-nav { display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; }
+.footer-nav a { font-size: 12px; color: var(--taupe); text-transform: uppercase; letter-spacing: 0.15em; transition: 0.3s; }
+.footer-nav a:hover { color: var(--sand); }
+.footer-social { display: flex; gap: 24px; }
+.footer-social svg { width: 20px; height: 20px; fill: var(--taupe); transition: 0.3s; cursor: pointer; }
+.footer-social svg:hover { fill: var(--burnt); }
+.footer-divider { width: 100%; height: 1px; background: #3A2018; }
+.footer-bottom { width: 100%; display: flex; justify-content: space-between; font-size: 12px; color: var(--taupe); }
+
+/* FALLBACK CSS ART */
+.no-image { position: relative; }
+.no-image > img { display: none !important; }
+.img-fallback { width: 100%; height: 100%; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 1; }
+.about-fallback {
+  background: linear-gradient(135deg, #E0C8A8 0%, #C4501A22 50%, #8B2A0A15 100%);
+}
+.about-fallback::before {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(139,42,10,0.15) 10px, rgba(139,42,10,0.15) 11px);
+}
+.portfolio-item.no-image { background: var(--card); }
+.portfolio-fallback {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+}
+.portfolio-fallback svg { width: 60%; height: 60%; fill: rgba(196,80,26,0.15); stroke: rgba(139,42,10,0.3); stroke-width: 1; }
+.artist-fallback { background: var(--sand); flex-direction: column; }
+.artist-fallback::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.05) 100%); }
+.artist-initials { font-family: 'Cormorant Garamond', serif; font-size: 96px; color: var(--rust); opacity: 0.4; font-weight: 300; }
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 1024px) {
+  .hero-name-1, .hero-name-2 { font-size: 13vw; }
+  .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-h2, .portfolio-h2, .contact-h2, .faq-container h2 { font-size: 56px; }
+  .services-top-left h2 { font-size: 64px; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .mobile-menu-btn { display: flex; }
+  #about, #contact { flex-direction: column; gap: 40px; }
+  .hero-name-1, .hero-name-2 { font-size: 18vw; }
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .artists-grid { flex-direction: column; }
+  .services-top { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .service-item { flex-wrap: wrap; gap: 20px; }
+  .svc-name { font-size: 24px; min-width: 200px; }
+  .svc-tag { text-align: left; width: 100%; padding-left: 60px; margin-top: -10px; }
+  .footer-logo { font-size: 32px; }
+  .footer-bottom { flex-direction: column; align-items: center; gap: 16px; }
+  #home, #services, #about, #portfolio, #artists, #faq, #contact { padding-top: 100px; padding-bottom: 100px; }
+}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-logo">DARK MATTER</div>
+  <div class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#artists">Artists</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="mobile-menu-btn" id="mobile-menu-btn">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-nav-overlay" id="mobile-nav-overlay">
+  <div class="mobile-nav-close" id="mobile-nav-close">&times;</div>
+  <a href="#home">Home</a>
+  <a href="#services">Services</a>
+  <a href="#about">About</a>
+  <a href="#portfolio">Portfolio</a>
+  <a href="#artists">Artists</a>
+  <a href="#faq">FAQ</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<section id="home">
+  <div class="hero-circle"></div>
+  <div class="hero-line hero-line-1"></div>
+  <div class="hero-line hero-line-2"></div>
+  <div class="hero-line hero-line-3"></div>
+  <div class="hero-watermark">TATTOO</div>
+  <div class="hero-content">
+    <div class="hero-eyebrow will-animate">EST. 2009 — BROOKLYN, NY</div>
+    <div class="hero-name-1 will-animate">DARK</div>
+    <div class="hero-name-2 will-animate">MATTER</div>
+    <div class="hero-tagline will-animate">Tattoo Studio & Art Collective</div>
+    <div class="hero-divider will-animate"></div>
+    <div class="will-animate">
+      <a href="#contact" class="btn">Book Your Session</a>
+    </div>
+    <div class="will-animate">
+      <a href="#portfolio" class="hero-link">View Our Work &darr;</a>
+    </div>
+  </div>
+  <div class="scroll-indicator will-animate">Scroll</div>
+</section>
+
+<section id="services">
+  <div class="services-top will-animate">
+    <div class="services-top-left">
+      <span class="eyebrow mono">What We Do</span>
+      <h2>Our Craft</h2>
+    </div>
+    <div class="services-top-right">
+      Every piece that leaves our studio is designed from scratch. We don't do flash. We don't do rushed. We do work that outlasts trends and earns its place on your skin forever.
+    </div>
+  </div>
+  <hr class="hr-full will-animate" style="margin-bottom: 56px;">
+  
+  <div class="service-item will-animate">
+    <div class="svc-num mono">01</div>
+    <div class="svc-name">Custom Tattoos</div>
+    <div class="svc-tag mono">FROM $150</div>
+    <div class="svc-arrow">&rarr;</div>
+  </div>
+  <div class="service-item will-animate">
+    <div class="svc-num mono">02</div>
+    <div class="svc-name">Fine Line Work</div>
+    <div class="svc-tag mono">PRECISION CRAFT</div>
+    <div class="svc-arrow">&rarr;</div>
+  </div>
+  <div class="service-item will-animate">
+    <div class="svc-num mono">03</div>
+    <div class="svc-name">Black & Grey Realism</div>
+    <div class="svc-tag mono">PORTRAITURE</div>
+    <div class="svc-arrow">&rarr;</div>
+  </div>
+  <div class="service-item will-animate">
+    <div class="svc-num mono">04</div>
+    <div class="svc-name">Color Tattoos</div>
+    <div class="svc-tag mono">VIVID PALETTES</div>
+    <div class="svc-arrow">&rarr;</div>
+  </div>
+  <div class="service-item will-animate">
+    <div class="svc-num mono">05</div>
+    <div class="svc-name">Cover-Ups & Reworks</div>
+    <div class="svc-tag mono">TRANSFORMATION</div>
+    <div class="svc-arrow">&rarr;</div>
+  </div>
+  <div class="service-item will-animate">
+    <div class="svc-num mono">06</div>
+    <div class="svc-name">Free Consultation</div>
+    <div class="svc-tag mono">30 MINUTES</div>
+    <div class="svc-arrow">&rarr;</div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-left will-animate">
+    <span class="about-eyebrow mono">Our Story</span>
+    <h2 class="about-h2">Born From<br>Obsession.</h2>
+    <p class="about-p">We didn't open a tattoo shop. We built a space where art has no ceiling and skin becomes the only canvas worth working on. Every chair in this studio was earned through obsession, not ambition.</p>
+    <p class="about-p">Founded in 2009 in Brooklyn, Dark Matter grew from a single artist with a single machine into a collective of twelve who share exactly one standard — the work has to be undeniable.</p>
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num">12</div>
+        <span class="stat-label mono">Artists On Staff</span>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">15<span style="font-size:32px;">YRS</span></div>
+        <span class="stat-label mono">In The Industry</span>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4k+</div>
+        <span class="stat-label mono">Pieces Completed</span>
+      </div>
+    </div>
+  </div>
+  <div class="about-right will-animate">
+    <div class="about-img-wrap" data-fallback="about">
+      <img src="images/about_studio.png" alt="About Studio" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="portfolio-top will-animate">
+    <div class="portfolio-top-left">
+      <span class="portfolio-eyebrow mono">The Work</span>
+      <h2 class="portfolio-h2">Ink Speaks<br>Louder</h2>
+    </div>
+    <div class="portfolio-top-right">
+      <a href="#" class="portfolio-link">All Pieces &rarr;</a>
+    </div>
+  </div>
+  
+  <div class="portfolio-grid">
+    <div class="portfolio-item will-animate" data-fallback="portfolio">
+      <img src="images/portfolio_1.png" alt="Portfolio 1" loading="lazy">
+      <div class="portfolio-overlay">
+        <div class="portfolio-overlay-title">View Piece</div>
+        <div class="portfolio-overlay-tag mono">BLACK & GREY</div>
+      </div>
+    </div>
+    <div class="portfolio-item will-animate" data-fallback="portfolio">
+      <img src="images/portfolio_2.png" alt="Portfolio 2" loading="lazy">
+      <div class="portfolio-overlay">
+        <div class="portfolio-overlay-title">View Piece</div>
+        <div class="portfolio-overlay-tag mono">FINE LINE</div>
+      </div>
+    </div>
+    <div class="portfolio-item will-animate" data-fallback="portfolio">
+      <img src="images/portfolio_3.png" alt="Portfolio 3" loading="lazy">
+      <div class="portfolio-overlay">
+        <div class="portfolio-overlay-title">View Piece</div>
+        <div class="portfolio-overlay-tag mono">REALISM</div>
+      </div>
+    </div>
+    <div class="portfolio-item will-animate" data-fallback="portfolio">
+      <img src="images/portfolio_4.png" alt="Portfolio 4" loading="lazy">
+      <div class="portfolio-overlay">
+        <div class="portfolio-overlay-title">View Piece</div>
+        <div class="portfolio-overlay-tag mono">TRADITIONAL</div>
+      </div>
+    </div>
+    <div class="portfolio-item will-animate" data-fallback="portfolio">
+      <img src="images/portfolio_5.png" alt="Portfolio 5" loading="lazy">
+      <div class="portfolio-overlay">
+        <div class="portfolio-overlay-title">View Piece</div>
+        <div class="portfolio-overlay-tag mono">GEOMETRIC</div>
+      </div>
+    </div>
+    <div class="portfolio-item will-animate" data-fallback="portfolio">
+      <img src="images/portfolio_6.png" alt="Portfolio 6" loading="lazy">
+      <div class="portfolio-overlay">
+        <div class="portfolio-overlay-title">View Piece</div>
+        <div class="portfolio-overlay-tag mono">COLOR</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="artists">
+  <div class="artists-top will-animate">
+    <span class="portfolio-eyebrow mono">The Team</span>
+    <h2 class="about-h2" style="margin-bottom:0;">Meet The Artists</h2>
+  </div>
+  <div class="artists-grid">
+    <div class="artist-card will-animate">
+      <div class="artist-img-wrap" data-fallback="artist" data-initials="MV">
+        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=400" alt="Marcus Veil" loading="lazy">
+      </div>
+      <div class="artist-info">
+        <div class="artist-name">MARCUS VEIL</div>
+        <div class="artist-specialty mono">Black & Grey Realism</div>
+        <div class="artist-bio">10 years shaping shadows into stories. Hyperrealism and portrait specialist.</div>
+        <a href="#" class="artist-handle mono">@marcusveil.ink</a>
+      </div>
+    </div>
+    <div class="artist-card will-animate">
+      <div class="artist-img-wrap" data-fallback="artist" data-initials="SC">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400" alt="Sara Cross" loading="lazy">
+      </div>
+      <div class="artist-info">
+        <div class="artist-name">SARA CROSS</div>
+        <div class="artist-specialty mono">Fine Line & Botanical</div>
+        <div class="artist-bio">Delicate work built to last. Nature-inspired architectural precision.</div>
+        <a href="#" class="artist-handle mono">@saracross.tattoo</a>
+      </div>
+    </div>
+    <div class="artist-card will-animate">
+      <div class="artist-img-wrap" data-fallback="artist" data-initials="RJ">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400" alt="Reno James" loading="lazy">
+      </div>
+      <div class="artist-info">
+        <div class="artist-name">RENO JAMES</div>
+        <div class="artist-specialty mono">Color & Neo-Traditional</div>
+        <div class="artist-bio">Bold palettes, tight lines. Every piece is a painting that moves with you.</div>
+        <a href="#" class="artist-handle mono">@renojames.art</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="faq-container will-animate">
+    <div class="faq-top">
+      <span class="portfolio-eyebrow mono">Got Questions</span>
+      <h2 class="about-h2" style="margin-bottom:0;">Before You Book</h2>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-q">
+        <h3>How do I book a session?</h3>
+        <span class="faq-icon mono">+</span>
+      </div>
+      <div class="faq-a">Fill the contact form below or DM us on Instagram. We reply within 24 hours to discuss your concept and find a date.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">
+        <h3>How much does a tattoo cost?</h3>
+        <span class="faq-icon mono">+</span>
+      </div>
+      <div class="faq-a">Custom work starts at $150. Final price depends on size, detail, and placement. Full quote given after your free consultation.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">
+        <h3>Does it hurt?</h3>
+        <span class="faq-icon mono">+</span>
+      </div>
+      <div class="faq-a">Honestly, yes — some spots more than others. Our artists work efficiently and check in throughout. Most clients say it was easier than they expected.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">
+        <h3>How do I prepare for my appointment?</h3>
+        <span class="faq-icon mono">+</span>
+      </div>
+      <div class="faq-a">Eat well before you come, stay hydrated, and wear clothing that allows easy access to the area. No alcohol 24 hours before.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">
+        <h3>How long does healing take?</h3>
+        <span class="faq-icon mono">+</span>
+      </div>
+      <div class="faq-a">Surface healing takes 2 to 3 weeks. Full healing is 3 to 4 months. We give detailed aftercare instructions after every session.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">
+        <h3>Do you do cover-ups?</h3>
+        <span class="faq-icon mono">+</span>
+      </div>
+      <div class="faq-a">Yes, and it is one of our strengths. We assess the existing work in a free consultation and design something that transforms it completely.</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-left will-animate">
+    <span class="about-eyebrow mono">Get In Touch</span>
+    <h2 class="contact-h2">Let's Talk<br>Ink.</h2>
+    
+    <div class="contact-details">
+      <div class="contact-detail-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 21s-8-9.5-8-14a8 8 0 1 1 16 0c0 4.5-8 14-8 14z"/><circle cx="12" cy="7" r="3"/></svg>
+        </div>
+        <div class="contact-text">123 Dark Street, Brooklyn NY 11201</div>
+      </div>
+      <div class="contact-detail-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="contact-text">+1 (555) 000-0000</div>
+      </div>
+      <div class="contact-detail-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="contact-text">hello@darkmatter.ink</div>
+      </div>
+      <div class="contact-detail-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="contact-text">Tue &ndash; Sat: 11AM &ndash; 8PM<br>Sun &ndash; Mon: Closed</div>
+      </div>
+    </div>
+    
+    <div class="contact-divider"></div>
+    
+    <div>
+      <span class="social-row-title mono">Follow Our Work</span>
+      <div class="social-icons">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm3.98-10.181a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 15.66a6.33 6.33 0 0010.86 4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1.04-.52z"/></svg>
+      </div>
+    </div>
+  </div>
+  
+  <div class="contact-right will-animate">
+    <div class="contact-form">
+      <div class="form-group">
+        <label class="mono">Full Name</label>
+        <input type="text" placeholder="Your Name">
+      </div>
+      <div class="form-group">
+        <label class="mono">Email Address</label>
+        <input type="email" placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label class="mono">Phone Number</label>
+        <input type="tel" placeholder="(555) 000-0000">
+      </div>
+      <div class="form-group">
+        <label class="mono">Your Tattoo Idea</label>
+        <textarea rows="5" style="resize:none;" placeholder="Describe your concept, style, and any specific details..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="mono">Preferred Artist</label>
+        <select>
+          <option>Any Artist</option>
+          <option>Marcus Veil</option>
+          <option>Sara Cross</option>
+          <option>Reno James</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="mono">Placement Area</label>
+        <input type="text" placeholder="e.g. forearm, ribs, shoulder blade">
+      </div>
+      <div class="form-group">
+        <label class="mono">Estimated Size</label>
+        <div class="size-selector">
+          <button class="size-pill selected">Small</button>
+          <button class="size-pill">Medium</button>
+          <button class="size-pill">Large</button>
+          <button class="size-pill">Extra Large</button>
+        </div>
+      </div>
+      <button class="btn" style="width: 100%; margin-top: 8px;">Book My Session &rarr;</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">DARK MATTER TATTOO</div>
+  <div class="footer-nav">
+    <a href="#home">Home</a>
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#artists">Artists</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="footer-social">
+    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm3.98-10.181a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 15.66a6.33 6.33 0 0010.86 4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1.04-.52z"/></svg>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-bottom">
+    <div>&copy; 2025 Dark Matter Tattoo Studio</div>
+    <div>Brooklyn, NY</div>
+  </div>
+</footer>
+
+<script>
+// 1. IMAGE ERROR HANDLING & CSS ART FALLBACKS
+document.querySelectorAll('img').forEach(function(img) {
+  img.onerror = function() {
+    this.style.display = 'none';
+    var parent = this.parentElement;
+    parent.classList.add('no-image');
+    
+    var fallback = document.createElement('div');
+    fallback.className = 'img-fallback';
+    
+    var fallbackType = parent.getAttribute('data-fallback');
+    
+    if(fallbackType === 'about') {
+      fallback.classList.add('about-fallback');
+    } 
+    else if(fallbackType === 'portfolio') {
+      fallback.classList.add('portfolio-fallback');
+      // Organic blob SVG
+      fallback.innerHTML = '<svg viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M40.5 15.5C55.5 5.5 75.5 10.5 85.5 25.5C95.5 40.5 90.5 65.5 75.5 78.5C60.5 91.5 35.5 90.5 20.5 75.5C5.5 60.5 25.5 25.5 40.5 15.5Z" transform="rotate(' + (Math.random()*360) + ' 50 50)" /></svg>';
+    }
+    else if(fallbackType === 'artist') {
+      fallback.classList.add('artist-fallback');
+      var initials = parent.getAttribute('data-initials');
+      fallback.innerHTML = '<div class="artist-initials">' + initials + '</div>';
+    }
+    
+    parent.appendChild(fallback);
+  };
+});
+
+// 2. SAFETY TIMEOUT (critical)
+setTimeout(function() {
+  document.querySelectorAll('.will-animate').forEach(function(el) {
+    var s = window.getComputedStyle(el);
+    if(s.opacity === '0' || s.opacity === '0.001') {
+      el.classList.add('in-view');
+    }
+  });
+}, 1200);
+
+// 3. NAV SCROLL
+window.addEventListener('scroll', function() {
+  var nav = document.getElementById('navbar');
+  if(window.scrollY > 80) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+});
+
+// 4. ACTIVE NAV LINKS
+var sections = document.querySelectorAll('section');
+var navLinks = document.querySelectorAll('.nav-links a');
+
+var navObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if(entry.isIntersecting) {
+      navLinks.forEach(function(link) {
+        link.classList.remove('active');
+        if(link.getAttribute('href').substring(1) === entry.target.id) {
+          link.classList.add('active');
+        }
+      });
+    }
+  });
+}, { threshold: 0.4 });
+
+sections.forEach(function(section) {
+  navObserver.observe(section);
+});
+
+// 5. MOBILE NAV TOGGLE
+var menuBtn = document.getElementById('mobile-menu-btn');
+var closeBtn = document.getElementById('mobile-nav-close');
+var overlay = document.getElementById('mobile-nav-overlay');
+var overlayLinks = overlay.querySelectorAll('a');
+
+function openMenu() {
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeMenu() {
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+menuBtn.addEventListener('click', openMenu);
+closeBtn.addEventListener('click', closeMenu);
+overlayLinks.forEach(function(link) {
+  link.addEventListener('click', closeMenu);
+});
+
+// 6. FAQ ACCORDION
+var faqItems = document.querySelectorAll('.faq-item');
+faqItems.forEach(function(item) {
+  var q = item.querySelector('.faq-q');
+  q.addEventListener('click', function() {
+    var isOpen = item.classList.contains('open');
+    faqItems.forEach(function(i) { i.classList.remove('open'); });
+    if(!isOpen) {
+      item.classList.add('open');
+    }
+  });
+});
+
+// 7. SIZE SELECTOR
+var sizePills = document.querySelectorAll('.size-pill');
+sizePills.forEach(function(pill) {
+  pill.addEventListener('click', function(e) {
+    e.preventDefault();
+    sizePills.forEach(function(p) { p.classList.remove('selected'); });
+    this.classList.add('selected');
+  });
+});
+
+// 9. SUBTLE SCROLL ANIMATIONS
+window.addEventListener('load', function() {
+  var animElements = document.querySelectorAll('.will-animate');
+  
+  var animObserver = new IntersectionObserver(function(entries, obs) {
+    entries.forEach(function(entry) {
+      if(entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+  
+  animElements.forEach(function(el) {
+    animObserver.observe(el);
+  });
+});
+</script>
+</body>
+</html>
