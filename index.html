@@ -346,9 +346,10 @@ footer { background: var(--dark); padding: 72px 8% 48px; color: var(--sand); dis
 
 /* Clip reveal */
 .js-loaded [data-animate="clip-reveal"] {
+  -webkit-clip-path: inset(0 100% 0 0);
   clip-path: inset(0 100% 0 0);
   opacity: 1;
-  transition: clip-path 0.9s cubic-bezier(0.77, 0, 0.18, 1);
+  transition: clip-path 0.9s cubic-bezier(0.77, 0, 0.18, 1), -webkit-clip-path 0.9s cubic-bezier(0.77, 0, 0.18, 1);
 }
 
 /* Line draw */
@@ -382,8 +383,8 @@ footer { background: var(--dark); padding: 72px 8% 48px; color: var(--sand); dis
 .js-loaded [data-animate].in-view {
   opacity: 1;
   transform: none;
-  clip-path: inset(0 0% 0 0);
-  will-change: auto;
+  -webkit-clip-path: inset(0 0 0 0);
+  clip-path: inset(0 0 0 0);
 }
 
 /* Reduced motion */
