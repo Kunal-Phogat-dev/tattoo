@@ -903,7 +903,11 @@ sizePills.forEach(function(pill) {
 // 7. PROFESSIONAL SCROLL-TRIGGERED ANIMATIONS
 (function() {
   // Step 1: Mark body as JS loaded to activate start states
-  window.addEventListener('load', function() {
+  var isStarted = false;
+  function startAnimations() {
+    if (isStarted) return;
+    isStarted = true;
+    
     document.body.classList.add('js-loaded');
     
     // Small delay so browser paints first before hiding elements
@@ -912,7 +916,14 @@ sizePills.forEach(function(pill) {
         initAnimations();
       });
     });
-  });
+  }
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    startAnimations();
+  } else {
+    document.addEventListener('DOMContentLoaded', startAnimations);
+    window.addEventListener('load', startAnimations);
+  }
 
   function initAnimations() {
     // Step 2: Set up IntersectionObserver
