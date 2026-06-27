@@ -467,31 +467,31 @@ footer { background: var(--dark); padding: 72px 8% 48px; color: var(--sand); dis
   <div class="service-item" data-animate="fade-right" data-delay="200">
     <div class="svc-num mono">02</div>
     <div class="svc-name">Fine Line Work</div>
-    <div class="svc-tag mono">PRECISION CRAFT</div>
+    <div class="svc-tag mono">FROM $200</div>
     <div class="svc-arrow">&rarr;</div>
   </div>
   <div class="service-item" data-animate="fade-right" data-delay="300">
     <div class="svc-num mono">03</div>
     <div class="svc-name">Black & Grey Realism</div>
-    <div class="svc-tag mono">PORTRAITURE</div>
+    <div class="svc-tag mono">$150 / HR</div>
     <div class="svc-arrow">&rarr;</div>
   </div>
   <div class="service-item" data-animate="fade-right" data-delay="400">
     <div class="svc-num mono">04</div>
     <div class="svc-name">Color Tattoos</div>
-    <div class="svc-tag mono">VIVID PALETTES</div>
+    <div class="svc-tag mono">$180 / HR</div>
     <div class="svc-arrow">&rarr;</div>
   </div>
   <div class="service-item" data-animate="fade-right" data-delay="500">
     <div class="svc-num mono">05</div>
     <div class="svc-name">Cover-Ups & Reworks</div>
-    <div class="svc-tag mono">TRANSFORMATION</div>
+    <div class="svc-tag mono">FROM $250</div>
     <div class="svc-arrow">&rarr;</div>
   </div>
   <div class="service-item" data-animate="fade-right" data-delay="600">
     <div class="svc-num mono">06</div>
     <div class="svc-name">Free Consultation</div>
-    <div class="svc-tag mono">30 MINUTES</div>
+    <div class="svc-tag mono">FREE</div>
     <div class="svc-arrow">&rarr;</div>
   </div>
 </section>
@@ -536,48 +536,48 @@ footer { background: var(--dark); padding: 72px 8% 48px; color: var(--sand); dis
   </div>
   
   <div class="portfolio-grid">
-    <a href="images/portfolio_1.jpg" target="_blank" class="portfolio-item" data-fallback="portfolio" data-animate="scale-up" data-delay="0" style="display:block;">
+    <div class="portfolio-item" data-price="$350" data-fallback="portfolio" data-animate="scale-up" data-delay="0">
       <img src="images/portfolio_1.jpg" alt="Portfolio 1" loading="lazy" decoding="async">
       <div class="portfolio-overlay">
         <div class="portfolio-overlay-title">View Piece</div>
         <div class="portfolio-overlay-tag mono">BLACK & GREY</div>
       </div>
-    </a>
-    <a href="images/portfolio_2.jpg" target="_blank" class="portfolio-item" data-fallback="portfolio" data-animate="scale-up" data-delay="100" style="display:block;">
+    </div>
+    <div class="portfolio-item" data-price="$200" data-fallback="portfolio" data-animate="scale-up" data-delay="100">
       <img src="images/portfolio_2.jpg" alt="Portfolio 2" loading="lazy" decoding="async">
       <div class="portfolio-overlay">
         <div class="portfolio-overlay-title">View Piece</div>
         <div class="portfolio-overlay-tag mono">FINE LINE</div>
       </div>
-    </a>
-    <a href="images/portfolio_3.jpg" target="_blank" class="portfolio-item" data-fallback="portfolio" data-animate="scale-up" data-delay="200" style="display:block;">
+    </div>
+    <div class="portfolio-item" data-price="$600" data-fallback="portfolio" data-animate="scale-up" data-delay="200">
       <img src="images/portfolio_3.jpg" alt="Portfolio 3" loading="lazy" decoding="async">
       <div class="portfolio-overlay">
         <div class="portfolio-overlay-title">View Piece</div>
         <div class="portfolio-overlay-tag mono">REALISM</div>
       </div>
-    </a>
-    <a href="images/portfolio_4.jpg" target="_blank" class="portfolio-item" data-fallback="portfolio" data-animate="scale-up" data-delay="300" style="display:block;">
+    </div>
+    <div class="portfolio-item" data-price="$250" data-fallback="portfolio" data-animate="scale-up" data-delay="300">
       <img src="images/portfolio_4.jpg" alt="Portfolio 4" loading="lazy" decoding="async">
       <div class="portfolio-overlay">
         <div class="portfolio-overlay-title">View Piece</div>
         <div class="portfolio-overlay-tag mono">TRADITIONAL</div>
       </div>
-    </a>
-    <a href="images/portfolio_5.jpg" target="_blank" class="portfolio-item" data-fallback="portfolio" data-animate="scale-up" data-delay="400" style="display:block;">
+    </div>
+    <div class="portfolio-item" data-price="$400" data-fallback="portfolio" data-animate="scale-up" data-delay="400">
       <img src="images/portfolio_5.jpg" alt="Portfolio 5" loading="lazy" decoding="async">
       <div class="portfolio-overlay">
         <div class="portfolio-overlay-title">View Piece</div>
         <div class="portfolio-overlay-tag mono">GEOMETRIC</div>
       </div>
-    </a>
-    <a href="images/portfolio_6.jpg" target="_blank" class="portfolio-item" data-fallback="portfolio" data-animate="scale-up" data-delay="500" style="display:block;">
+    </div>
+    <div class="portfolio-item" data-price="$450" data-fallback="portfolio" data-animate="scale-up" data-delay="500">
       <img src="images/portfolio_6.jpg" alt="Portfolio 6" loading="lazy" decoding="async">
       <div class="portfolio-overlay">
         <div class="portfolio-overlay-title">View Piece</div>
         <div class="portfolio-overlay-tag mono">COLOR</div>
       </div>
-    </a>
+    </div>
   </div>
 </section>
 
@@ -983,6 +983,31 @@ sizePills.forEach(function(pill) {
     }
   }
 })();
+
+// 8. PORTFOLIO PRICE CLICK INTERACTION
+document.querySelectorAll('.portfolio-item').forEach(function(item) {
+  item.addEventListener('click', function(e) {
+    e.preventDefault();
+    var title = this.querySelector('.portfolio-overlay-title');
+    var tag = this.querySelector('.portfolio-overlay-tag');
+    var price = this.getAttribute('data-price');
+    
+    if (title.innerText !== price) {
+      // Show price
+      this.dataset.origTitle = title.innerText;
+      this.dataset.origTag = tag.innerText;
+      
+      title.innerText = price;
+      title.style.transform = 'scale(1.2)';
+      tag.innerText = "ESTIMATED VALUE";
+    } else {
+      // Restore original
+      title.innerText = this.dataset.origTitle;
+      title.style.transform = 'scale(1)';
+      tag.innerText = this.dataset.origTag;
+    }
+  });
+});
 </script>
 </body>
 </html>
