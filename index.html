@@ -73,6 +73,11 @@ nav.scrolled { box-shadow: 0 1px 0 var(--border); }
   width: 600px; height: 600px; border-radius: 50%;
   background: radial-gradient(circle, #C4501A0A 0%, transparent 70%);
   position: absolute; top: -200px; right: -200px;
+  animation: float 15s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-30px, 30px); }
 }
 .hero-line { position: absolute; left: 0; right: 0; height: 1px; background: var(--border); opacity: 0.4; }
 .hero-line-1 { top: 25%; } .hero-line-2 { top: 50%; } .hero-line-3 { top: 75%; }
@@ -100,6 +105,11 @@ nav.scrolled { box-shadow: 0 1px 0 var(--border); }
 .scroll-indicator {
   position: absolute; bottom: 40px; right: 8%; writing-mode: vertical-rl;
   font-size: 10px; color: var(--taupe); letter-spacing: 0.3em; text-transform: uppercase;
+  animation: bounce 2s infinite ease-in-out;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
 }
 
 /* SERVICES */
@@ -797,13 +807,25 @@ sizePills.forEach(function(pill) {
 window.addEventListener('load', function() {
   var animElements = document.querySelectorAll('.will-animate');
   
+  var delayTimer = null;
+  var currentDelay = 0;
+
   var animObserver = new IntersectionObserver(function(entries, obs) {
-    entries.forEach(function(entry) {
-      if(entry.isIntersecting) {
-        entry.target.classList.add('in-view');
+    var intersectingEntries = entries.filter(function(e) { return e.isIntersecting; });
+    if(intersectingEntries.length > 0) {
+      intersectingEntries.forEach(function(entry) {
+        setTimeout(function() {
+          entry.target.classList.add('in-view');
+        }, currentDelay);
+        currentDelay += 120; // 120ms stagger between elements
         obs.unobserve(entry.target);
-      }
-    });
+      });
+      
+      clearTimeout(delayTimer);
+      delayTimer = setTimeout(function() {
+        currentDelay = 0;
+      }, 50);
+    }
   }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
   
   animElements.forEach(function(el) {
